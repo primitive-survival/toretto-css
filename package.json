@@ -1,0 +1,16 @@
+{
+  "name": "toretto-css",
+  "version": "0.0.1",
+  "description": "Toretto CSS Framework",
+  "main": "index.js",
+  "scripts": {
+    "dev": "live-server ./public --ignore=./node_modules",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["CSS", "JS", "CSS in JS"],
+  "author": "Rus INozemtsev",
+  "license": "ISC",
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}
