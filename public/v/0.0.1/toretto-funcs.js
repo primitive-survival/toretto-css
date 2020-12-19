@@ -1,3 +1,6 @@
+export const valToProp = {
+    'bold': 'font-weight', 'bolder': 'font-weight', 'light': 'font-weight', 'lighter': 'font-weight'
+}
 const _isColor = c => {
     const el = new Option()
     const s = el.style
@@ -28,7 +31,6 @@ const _color = (color, propName) => {
     }
 
     return `var(--${color}, ${color})`
-
 }
 
 /** size */
@@ -208,7 +210,6 @@ export const eq = (f, v) =>
     width: 0;
     padding: calc(var(--gutter) / 2);
     `
-    
 
 /** Text Properties Shortcuts. */
 export const text = (f, s, w) =>
@@ -236,6 +237,9 @@ export const bg = (f, v) =>
     css`background-color: ${_color(v)};`
 
 export const fallback = (f, ...v) => {
+    if (valToProp[f])
+        return `${valToProp[f]}: ${f};`
+
     if (_isColor(f) && !v[0])
         return css`color: ${f};`
 
