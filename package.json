@@ -1,12 +1,12 @@
 {
   "name": "toretto-css",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "Toretto CSS Framework",
   "main": "index.js",
   "scripts": {
-    "copy": "cp -r ./public/v/dev ./public/v/prev/${npm_package_version} && echo ${npm_package_version} > ./public/v/prev/${npm_package_version}/version.txt && rm -rf ./public/v/current && cp -r ./public/v/prev/${npm_package_version} ./public/v/current && firebase deploy && npm run commit",
-    "commit": "git add . && git commit -m release-v${npm_package_version} && git push origin v${npm_package_version}",
-    "release": "standard-version && npm run copy",
+    "copy": "cp -r ./public/v/dev ./public/v/prev/${npm_package_version} && echo ${npm_package_version} > ./public/v/prev/${npm_package_version}/version.txt && rm -rf ./public/v/current && cp -r ./public/v/prev/${npm_package_version} ./public/v/current && firebase deploy",
+    "commit": "git add . && git commit -m v${npm_package_version} && git push origin v${npm_package_version}",
+    "release": "standard-version && npm run copy && npm run commit",
     "dev": "live-server ./public --ignore=./node_modules",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
