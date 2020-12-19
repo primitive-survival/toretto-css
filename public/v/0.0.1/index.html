@@ -8,7 +8,23 @@
 </head>
 
 <body style="visibility: hidden;" class="bg-black">
-    <div class="container bg-snow">
+    
+    <template id="Section">
+        <div class="mv-4">
+            <h2 class="text-2-bold mv">${props.title}</h2>
+            <div class="mv">${props.children}</div>
+        </div>
+    </template>
+
+    <template id="SubSection">
+        <div class="mv-2">
+            <h2 class="text-1.5-bold mv">${props.title}</h2>
+            <div class="mv">${props.children}</div>
+        </div>
+    </template>
+
+    <div class="bg-snow">
+    <div class="container ">
         <div class="col">
             <div class="item-s">
                 <div class="ph-1 pv-2">
@@ -24,7 +40,7 @@
                                     <input type="checkbox" class="trigger item-s item-1 mv none^md"
                                         onchange="document.getElementById('navbar').className = this.checked ? 'open' : 'closed'" />
                                     <div class="item-s item-0 green@open none block^md block@open">
-                                        <ul class="_ gutter col row^md ">
+                                        <ul class="_ gutter col row^md">
                                             <li class="item-s">
                                                 <a href="./docs">Docs</a>
                                             </li>
@@ -45,9 +61,7 @@
                         </li>
                     </ul>
                     <!-- Navbar < -->
-
                 </div>
-
                 <!-- Hero > -->
                 <div class="align-center">
                     <div class="text-2-900 text-4^md mv-2">
@@ -65,21 +79,17 @@
                     </div>
                 </div>
                 <!-- Hero < -->
-
             </div>
             <div class="auto">
-
                 <!-- install and use-->
                 <div class="row-wrap gutter">
                     <div class="item-a">
                         <div class="bg-linen text-.875 p-1 radius">
                             <div class="text-1-bold m-bottom">Install</div>
-
                             <div style="overflow-x: auto;">
                                 <code class="mv">
                                     <!-- Optional Theme. -->
                                     <link href="./toretto-reset.css" rel="stylesheet">
-
                                     <!-- Toretto Core. -->
                                     <script src="./toretto-css.js" type="module"></script>
                                 </code>
@@ -88,8 +98,38 @@
                     </div>
                 </div>
 
-                <h2 class="text-2-bold m-top-4">Documentation</h2>
+                <Section title="Box Helpers">
+                    <SubSection title="Padding">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="w-10">Name</th>
+                                    <th class="w-20">Properties</th>
+                                    <th>Examples</th>
+                                </td>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>p</td>
+                                    <td>padding</td>
+                                    <td>class="p", class="p-1", class="p-10%"</td>
+                                </tr>
+                                <tr>
+                                    <td>pv</td>
+                                    <td>padding-top + padding-bottom</td>
+                                    <td>class="pv", class="pv-1", class="pv-10%"</td>
+                                </tr>
+                                <tr>
+                                    <td>pm</td>
+                                    <td>padding</td>
+                                    <td>class="p", class="p-1", class="p-10%"</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </SubSection>
+                </Section>
 
+                <h2 class="text-2-bold m-top-4">Documentation</h2>
                 <div class="bg-aliceblue p mv radius">
                     <p class="mv"><strong>How it works</strong></p>
                     <p class="mv">
@@ -152,6 +192,7 @@
                 <!-- Footer < -->
             </div>
         </div>
+    </div>
     </div>
 
     <script type="module">
