@@ -1,10 +1,10 @@
 {
   "name": "toretto-css",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Toretto CSS Framework",
   "main": "index.js",
   "scripts": {
-    "copy": "rm -rf ./public/v/current && cp -r ./public/v/dev ./public/v/current && cp -r ./public/v/dev ./public/v/${npm_package_name_version}",
+    "copy": "rm -rf ./public/v/current && cp -r ./public/v/dev ./public/v/current && cp -r ./public/v/dev ./public/v/${npm_package_version}",
     "release": "standard-version && npm run copy",
     "dev": "live-server ./public --ignore=./node_modules",
     "test": "echo \"Error: no test specified\" && exit 1"
