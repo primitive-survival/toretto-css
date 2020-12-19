@@ -75,7 +75,7 @@
                         no dependencies
                     </div>
                     <div class="pv-2 silver">
-                        current version 0.0.1
+                        current version <span class="bold" id="version"></span>
                     </div>
                 </div>
                 <!-- Hero < -->
@@ -239,6 +239,12 @@
                 .trim()
             n.innerHTML = code
         })
+    </script>
+
+    <script>
+        fetch('./version.txt')
+            .then(r => r.text())
+            .then(v => document.getElementById('version').innerHTML = v)
     </script>
 </body>
 
