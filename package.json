@@ -1,16 +1,22 @@
 {
   "name": "toretto-css",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Toretto CSS Framework",
   "main": "index.js",
   "scripts": {
+    "release": "standard-version",
     "dev": "live-server ./public --ignore=./node_modules",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["CSS", "JS", "CSS in JS"],
+  "keywords": [
+    "CSS",
+    "JS",
+    "CSS in JS"
+  ],
   "author": "Rus INozemtsev",
   "license": "ISC",
   "devDependencies": {
-    "live-server": "^1.2.1"
+    "live-server": "^1.2.1",
+    "standard-version": "^9.0.0"
   }
 }
