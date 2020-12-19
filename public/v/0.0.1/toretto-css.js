@@ -2,6 +2,9 @@
 import * as funcs from './toretto-funcs.js'
 
 const _runtime = {
+    options: {
+        prefix: null
+    },
     generated: {}
 }
 
@@ -25,6 +28,9 @@ export const escapeClassName = cn => {
  *  func[-arg1-arg2-...argX][^|@md|^|@lg][:hover|:after|:before]
  */
 export const parseClassName = cn => {
+    if (_runtime.options.prefix)
+        cn = cn.replace(`${_runtime.options.prefix}_`, '')
+
     const t = cn.includes('^')
     const p = cn.split(':')
     const s = t ? p[0].split('^') : p[0].split('@')
@@ -93,16 +99,18 @@ export function walkNodes(nodes) {
                 .appendChild(el)
             styles.push(el)
         }
-
     }
-
     return styles
 }
 
 /** Go. 
  * 
  */
-(() => {
+export const runToretto = (options = {}) => {
+    _runtime.options = {
+        ..._runtime.options,
+        ...options
+    }
     let d = null
     try {
         d = document
@@ -111,16 +119,12 @@ export function walkNodes(nodes) {
          **/
         return
     }
-
-    const callback = function (mutationsList) {
-
+    const cb = function (mutationsList) {
         for (let m of mutationsList) {
             walkNodes(m.addedNodes)
         }
     }
-
-    const o = new MutationObserver(callback);
-
+    const o = new MutationObserver(cb);
     o.observe(
         d.body,
         {
@@ -129,10 +133,8 @@ export function walkNodes(nodes) {
             subtree: true
         }
     )
-
     /** Generate Styles For Initial Html 
      * */
     walkNodes(d.querySelectorAll('[class]'))
-
     d.body.style.visibility = 'visible'
-})()
+}

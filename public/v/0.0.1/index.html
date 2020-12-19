@@ -4,11 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="./vendors/prism/prism.css">
-
-
     <link href="./toretto-reset.css" rel="stylesheet" />
-    <script src="./toretto-css.js" type="module"></script>
 </head>
 
 <body style="visibility: hidden;" class="bg-black">
@@ -16,7 +12,6 @@
         <div class="col">
             <div class="item-s">
                 <div class="ph-1 pv-2">
-
                     <!-- Navbar > -->
                     <ul class="_ row">
                         <li class="item-a">
@@ -152,10 +147,19 @@
             </div>
 
             <div class="skinny">
+                <!-- Footer > -->
                 <div class="pv-2 text-.75">Rus Inozemtsev</div>
+                <!-- Footer < -->
             </div>
         </div>
     </div>
+
+    <script type="module">
+        import { runToretto } from './toretto-css.js'
+        runToretto({
+            prefix: 't'
+        })
+    </script>
 
     <script>
         const theme = {
