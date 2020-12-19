@@ -38,6 +38,19 @@ ul, ol {
     padding-left: 1em;
 }
 
+table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    border: 1px solid var(--border-color, linen);
+}
+
+td, th {
+    padding: .5rem;
+    font-size: .875rem;
+}
+
+
 label {
     display: block;
     font-weight: bold;
