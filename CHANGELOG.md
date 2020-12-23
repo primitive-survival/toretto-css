@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.42](https://github.com/primitive-survival/toretto-css/compare/v0.0.41...v0.0.42) (2020-12-23)
+
+
+### Features
+
+* Update changelog link ([da45f59](https://github.com/primitive-survival/toretto-css/commit/da45f59afd839c34671d9600e8a2b30a6b6b93f4))
+
 ### [0.0.41](https://github.com/primitive-survival/toretto-css/compare/v0.0.40...v0.0.41) (2020-12-23)
 
 ### [0.0.40](https://github.com/primitive-survival/toretto-css/compare/v0.0.39...v0.0.40) (2020-12-23)
