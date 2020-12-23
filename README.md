@@ -5,7 +5,7 @@ CSS Framework For Dudes With Deadlines
 For more docs visit https://torettocss.web.app
 
 ## Changes
-[Changelog](./blob/master/CHANGELOG.MD)
+[Changelog](CHANGELOG.MD)
 
 ## Development
 - Fork repo
