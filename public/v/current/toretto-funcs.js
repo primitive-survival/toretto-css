@@ -1,15 +1,20 @@
-const _runtime = {
+export const _runtime = {
     options: {
         prefix: null
     },
     generated: {}
 }
 
+export const funcs = {}
 
 const _isColor = c => {
+    if (c[0] === '#')
+        return c
+
     const el = new Option()
     const s = el.style
     s.color = c
+
     return s.color == c
 }
 
@@ -17,11 +22,11 @@ const _isSide = s => {
     return ['top', 'right', 'bottom', 'left'].includes(s)
 }
 
-const _kebabCase = s => {
+export const _kebabCase = s => {
     return s.replace(/([A-Z]{1})/g, '-$1').toLowerCase()
 }
 
-const _color = (color, propName) => {
+export const _color = (color, propName) => {
 
     if (!_isColor(color)) {
         throw new Error(`"${color}" is not valid color`)
@@ -39,7 +44,7 @@ const _color = (color, propName) => {
 }
 
 /** size */
-const _s = (size, propName) => {
+export const _size = (size, propName) => {
 
     size = size + ''
 
@@ -73,7 +78,7 @@ const _s = (size, propName) => {
     return size
 }
 
-const css = (s, ...v) => s.reduce((a, c, i) => {
+export const css = (s, ...v) => s.reduce((a, c, i) => {
     a.push(c)
     v[i] && a.push(v[i])
     return a
@@ -93,19 +98,13 @@ export const knownPropsToKnownValues = knownProps =>
         )
 
 export const knownProps = {
-    'font-weight': ['bold', 'bolder', 'light', 'lighter']
+    'font-weight': ['bold', 'bolder', 'light', 'lighter'],
+    'display': ['block', 'flex', 'inline']
 }
 
-export const knownValues = {
-    // Font
-    'bold': 'font-weight', 'bolder': 'font-weight', 'light': 'font-weight', 'lighter': 'font-weight',
-
-    // Displ
-    'block': 'display', 'flex': 'display'
-}
+export const knownValues = knownPropsToKnownValues(knownProps)
 
 export const sides = ['top', 'right', 'bottom', 'left']
-
 
 /** Parse Class Name. 
  *  
@@ -119,10 +118,11 @@ export const parseClassName = cn => {
     const p = cn.split(':')
     const s = t ? p[0].split('^') : p[0].split('@')
     const a = s[0].split('-')
+    
     return {
         func: a[0],
-        args: a.slice(1),
-        size: s[1] && (t ? '^' + s[1] : '@' + s[1]),
+        props: a.slice(1),
+        media: s[1] ? (t ? '^' + s[1] : '@' + s[1]) : null,
         pseudo: p.slice(1)
     }
 }
@@ -132,40 +132,38 @@ export const parseClassName = cn => {
  *    then fallowing numeric params will be grouped by its type
  *    unless new type will be found
  */
-export const groupParams = (p = []) => {
+export const groupProps = (p = []) => {
     let currentType = 'numeric'
+
     const groups = {
-        // Vertical
+        // Vertical (top + botton)
         v: [],
         // Horizontal
         h: [],
-
-        // Position
-        // Top
-        abs: [],
-        fix: [],
-
         // Width
         x: [],
         // Height
         y: [],
-        // Padding
-        p: [],
-        // Margin
-        m: [],
-        // Negative Margin
-        e: [],
+
+        t: [],
+        r: [],
+        b: [],
+        l: [],
+
         // Numeric
         numeric: [],
+
         // Colors
         colors: [],
+
+        // Known Props
         known: [],
+
+        // Unknown Props
         unknown: []
     }
 
     for (let _p of p) {
-
-        console.log(_p)
 
         if (knownValues[_p]) {
             groups.known.push(_p)
@@ -183,7 +181,7 @@ export const groupParams = (p = []) => {
         if (name !== '') {
             currentType = name
             if (!groups[currentType])
-                groups[currentType] = []
+                groups.unknown.push(_p)
 
             continue
         }
@@ -196,14 +194,8 @@ export const groupParams = (p = []) => {
         groups.unknown.push(_p)
     }
 
-    console.log(groups)
-
     return groups
 }
-
-// const parsed = parseClassName('block-23-p-1%-1-0rem-0-m-2-2--3')
-// groupParams([parsed.func, ...parsed.args])
-
 
 /** Reset Element To Pure Basics */
 export const _ = () => css`
@@ -229,46 +221,46 @@ export const block = () =>
     css`display: block;`
 
 export const w = (f, v) =>
-    css`width: ${_s(v)};`
+    css`width: ${_size(v)};`
 
 export const container = (f, ...v) =>
     css`
-        max-width: ${_s(v[0] || 80)};
-        padding-left: ${_s(v[1] || 1)};
-        padding-right: ${_s(v[1] || 1)};
+        max-width: ${_size(v[0] || 80)};
+        padding-left: ${_size(v[1] || 1)};
+        padding-right: ${_size(v[1] || 1)};
         margin-left: auto;
         margin-right: auto;
     `
 
 export const h = (f, v) =>
-    css`height: ${_s(v)};`
+    css`height: ${_size(v)};`
 
 export const m = (f, ...v) =>
     _isSide(v[0])
-        ? `margin-${v[0]}: ${_s(v[1] || 1)};`
-        : `margin: ${_s(v[0] || 1)};`
+        ? `margin-${v[0]}: ${_size(v[1] || 1)};`
+        : `margin: ${_size(v[0] || 1)};`
 
 export const mv = (f, ...v) =>
     css`
-        margin-top: ${_s(v[0] || 1)};
-        margin-bottom: ${_s(v[0] || 1)};
+        margin-top: ${_size(v[0] || 1)};
+        margin-bottom: ${_size(v[0] || 1)};
     `
 
 export const p = (f, ...v) =>
     _isSide(v[0])
-        ? `padding-${v[0]}: ${_s(v[1] || 1)};`
-        : `padding: ${_s(v[0] || 1)};`
+        ? `padding-${v[0]}: ${_size(v[1] || 1)};`
+        : `padding: ${_size(v[0] || 1)};`
 
 export const pv = (f, ...v) =>
     css`
-        padding-top: ${_s(v[0] || 1)};
-        padding-bottom: ${_s(v[0] || 1)};
+        padding-top: ${_size(v[0] || 1)};
+        padding-bottom: ${_size(v[0] || 1)};
     `
 
 export const ph = (f, ...v) =>
     css`
-        padding-left: ${_s(v[0] || 1)};
-        padding-right: ${_s(v[0] || 1)};
+        padding-left: ${_size(v[0] || 1)};
+        padding-right: ${_size(v[0] || 1)};
     `
 
 export const border = (f, a, b) =>
@@ -285,11 +277,11 @@ export const border = (f, a, b) =>
         `
 
 export const radius = (f, a) =>
-    css`border-radius: ${a ? _s(a) : 'var(--border-radius, .25rem)'};`
+    css`border-radius: ${a ? _size(a) : 'var(--border-radius, .25rem)'};`
 
 /** Flex Properties Shortcuts. */
 export const gutter = (f, v) =>
-    css`--gutter: ${v ? _s(v) : '1rem'};`
+    css`--gutter: ${v ? _size(v) : '1rem'};`
 
 export const row = (f, ...v) =>
     `
@@ -344,7 +336,7 @@ export const eq = (f, v) =>
 /** Text Properties Shortcuts. */
 export const font = (f, s, w) =>
     `
-    ${s ? `font-size: ${_s(s)};` : ''}
+    ${s ? `font-size: ${_size(s)};` : ''}
     ${w ? `font-weight: ${w};` : ''}
     `
 export const cap = (f, v) =>
@@ -375,7 +367,7 @@ export const fallback = (f, ...v) => {
         return css`color: ${f};`
 
     /** Latest Fallback Is Just Seting Of The Prop. */
-    const _v = v.map(i => _s(_kebabCase(i))).join(' ')
+    const _v = v.map(i => _size(_kebabCase(i))).join(' ')
     const _f = _kebabCase(f)
     return `${_f}: ${_v};`
 }
