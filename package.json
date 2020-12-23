@@ -1,6 +1,6 @@
 {
   "name": "toretto-css",
-  "version": "0.0.44",
+  "version": "0.0.45",
   "description": "Toretto CSS Framework",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "copyNewCurrent": "cp -r ./public/v/prev/${npm_package_version} ./public/v/current",
     "copy": "npm run copy2prev && npm run copyNewCurrent",
     "git-add": "git add ./public/v/current && git add ./public/v/prev/${npm_package_version} && git add ./public/v/prev/${npm_package_version}/version.txt && git add CHANGELOG.md ",
-    "commit": "npm run git-add && git commit -m v${npm_package_version} && git push --tags origin master",
+    "commit": "npm run git-add && git commit -m v${npm_package_version} && git tag v${npm_package_version} && git push --tags origin master",
     "release": "npm run test && npm run cleanup && standard-version && npm run copy && npm run commit && firebase deploy",
     "dev": "live-server ./public --ignore=./node_modules --port=34615",
     "dev-funcs": "nodemon -r esm ./public/v/dev/toretto-funcs.js",
