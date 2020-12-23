@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap");
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: transparent;
+    line-height: 1.4;
+}
+
+html {    
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    min-height: 100vh; 
+
+    font-family: var(--font-family, system-ui, -apple-system, 'Segoe UI', 'Open Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji');
+    font-size: var(--font-size, 1rem);
+
+    background-color: var(--background-color, #fff);
+    color: var(--color, #111);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+a {
+    color: var(--color-a, dodgerblue);
+}
+
+ul, ol {
+    padding-left: 1em;
+}
+
+table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    border: 1px solid var(--border-color, linen);
+}
+
+td, th {
+    padding: .5rem;
+    font-size: .875rem;
+}
+
+
+label {
+    display: block;
+    font-weight: bold;
+    font-size: var(--font-size-label, var(--font-size-small, .875rem));
+}
+
+input:not([type=checkbox]):not([type=radio]), textarea {
+    display: block;
+    padding: var(--padding-input, 1rem);
+    
+    border: var(--border-input, 1px solid var(--border-color, silvergray));
+    border-radius: var(--border-radius, .125rem);
+
+    font-size: var(--font-size-input, var(--font-size-small, .875rem));
+    font-family: inherit;
+}
+
+textarea {
+    width: 100%;
+    min-height: 10rem;
+}
+
+button {
+    display: inline-block;
+    padding: var(--padding-input, .5rem 1rem);
+
+    color: var(--color-button, #fff);
+    background-color: var(--background-color-button, gray);
+
+    border: var(--border-button, 1px solid var(--border-color, silvergray));
+    border-radius: var(--border-radius, .25rem);
+
+    font-size: var(--font-size-input, var(--font-size-small, .875rem));
+    cursor: pointer;
+}
+
+code, kbd, pre, samp {
+    display: block;
+    font-family: Menlo, ui-monospace, SFMono-Regular, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+}
+
+code {
+    
+    white-space: pre-wrap;
+    overflow: scroll;
+}
+
+audio, canvas, embed, iframe, img, object, svg, video {
+    display: block;
+    vertical-align: middle;
+}
+
+img, video {
+    max-width: 100%;
+    height: auto;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid var(--border-color, silver);
+    margin: 1em 0;
+    padding: 0;
+}
