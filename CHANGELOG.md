@@ -2,49 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [0.0.21](https://github.com/primitive-survival/toretto-css/compare/v0.0.20...v0.0.21) (2020-12-19)
-
-### [0.0.20](https://github.com/primitive-survival/toretto-css/compare/v0.0.19...v0.0.20) (2020-12-19)
-
-### [0.0.19](https://github.com/primitive-survival/toretto-css/compare/v0.0.18...v0.0.19) (2020-12-19)
-
-### [0.0.18](https://github.com/primitive-survival/toretto-css/compare/v0.0.17...v0.0.18) (2020-12-19)
-
-### [0.0.17](https://github.com/primitive-survival/toretto-css/compare/v0.0.16...v0.0.17) (2020-12-19)
-
-### [0.0.16](https://github.com/primitive-survival/toretto-css/compare/v0.0.15...v0.0.16) (2020-12-19)
-
-### [0.0.15](https://github.com/primitive-survival/toretto-css/compare/v0.0.14...v0.0.15) (2020-12-19)
-
-### [0.0.14](https://github.com/primitive-survival/toretto-css/compare/v0.0.13...v0.0.14) (2020-12-19)
-
-### [0.0.13](https://github.com/primitive-survival/toretto-css/compare/v0.0.12...v0.0.13) (2020-12-19)
-
-### [0.0.12](https://github.com/primitive-survival/toretto-css/compare/v0.0.11...v0.0.12) (2020-12-19)
-
-### [0.0.11](https://github.com/primitive-survival/toretto-css/compare/v0.0.10...v0.0.11) (2020-12-19)
-
-### [0.0.10](https://github.com/primitive-survival/toretto-css/compare/v0.0.9...v0.0.10) (2020-12-19)
-
-### [0.0.9](https://github.com/primitive-survival/toretto-css/compare/v0.0.8...v0.0.9) (2020-12-19)
-
-### [0.0.8](https://github.com/primitive-survival/toretto-css/compare/v0.0.7...v0.0.8) (2020-12-19)
-
-### [0.0.7](https://github.com/primitive-survival/toretto-css/compare/v0.0.6...v0.0.7) (2020-12-19)
-
-### [0.0.6](https://github.com/primitive-survival/toretto-css/compare/v0.0.5...v0.0.6) (2020-12-19)
-
-### [0.0.5](https://github.com/primitive-survival/toretto-css/compare/v0.0.4...v0.0.5) (2020-12-19)
-
-### [0.0.4](https://github.com/primitive-survival/toretto-css/compare/v0.0.3...v0.0.4) (2020-12-19)
-
-### [0.0.3](https://github.com/primitive-survival/toretto-css/compare/v0.0.2...v0.0.3) (2020-12-19)
-
-### 0.0.2 (2020-12-19)
+### [0.0.22](https://github.com/primitive-survival/toretto-css/compare/v0.0.21...v0.0.22) (2020-12-23)
 
 
 ### Features
 
-* Add styles for table to reset. ([8dd4a43](https://github.com/primitive-survival/toretto-css/commit/8dd4a43056e84350ac7fdb96c97f6760aaf3fe0b))
-* Prefix support for classes. closes [#1](https://github.com/primitive-survival/toretto-css/issues/1) ([8c18a4a](https://github.com/primitive-survival/toretto-css/commit/8c18a4a3b8acf320b90004cb5ef5f06519f28c1a))
-* Toretto templates. ([bd80bfb](https://github.com/primitive-survival/toretto-css/commit/bd80bfbfdfbf775becd8e28ab2bb7c389bca0618))
+* Ava testing suite added ([37e414f](https://github.com/primitive-survival/toretto-css/commit/37e414fbccd759f46e99d8a168cbb5a29c35dee3))
+* Favicon and logo ([815b367](https://github.com/primitive-survival/toretto-css/commit/815b3672f6115593aff997feb9cc1e64953bcc45))
