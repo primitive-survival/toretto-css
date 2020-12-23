@@ -1,19 +1,40 @@
 
 import * as funcs from './toretto-funcs.js'
-import { knownValues, _runtime, parseClassName } from './toretto-funcs.js'
+import { 
+    _runtime, 
+    parseClassName, 
+    funcs as _funcs 
+} from './toretto-funcs.js'
 
-const sizes = {
+/** Todo: remove this later
+ *  This is needed for migration purpose
+ *  should be removed later
+ */
+Object.assign(funcs, _funcs)
+
+const media = {
     '@md': '(min-width: 50rem) and (max-width: 100rem)',
     '@lg': '(min-width: 100rem)',
     '^md': '(min-width: 50rem)',
     '^lg': '(min-width: 100rem)',
 }
+
+/** Todo: remove this later
+ *  @deprecated
+ * */
+const sizes = media
+
 export const components = {
 
 }
-/** Chek If Tagname Is Standart Or Custom */
+
+/** Check If Tagname Is Standart Or Custom.
+ * 
+ * */
+
 export const isStandartTag = t => document.createElement(t) + '' !== '[object HTMLUnknownElement]'
-/** EscapeClassName
+
+/** EscapeClassName.
  * 
  */
 export const escapeClassName = cn => {
@@ -22,7 +43,6 @@ export const escapeClassName = cn => {
     return cn.replace(/([()%@#:.^/]{1})/gi, '\\$1') + pseudo
 }
 
-
 /** Create Style Based On Class Name. 
  * 
  * */
@@ -30,19 +50,19 @@ export const createStyle = cn => {
     const tokens = parseClassName(cn.trim())
     const rawStyle = (funcs[tokens.func] || funcs.fallback)(
         tokens.func,
-        ...tokens.args
+        ...tokens.props
     )
     const escapedName = escapeClassName(cn)
     let style = ''
 
-    if (tokens.size && sizes[tokens.size])
-        style = `@media screen and ${sizes[tokens.size]} { 
+    if (tokens.media && sizes[tokens.media])
+        style = `@media screen and ${sizes[tokens.media]} { 
             .${escapedName} {
                 ${rawStyle}
             }
         }`
-    else if (tokens.size) 
-        style = `.${tokens.size.substr(1)} .${escapedName} {
+    else if (tokens.media) 
+        style = `.${tokens.media.substr(1)} .${escapedName} {
             ${rawStyle}
         }`
     else
@@ -58,8 +78,8 @@ export const createStyle = cn => {
  */
 const _walkNodesCache = {
     ids: {},
-
 }
+
 export function walkNodes(nodes) {
     const styles = []
 
