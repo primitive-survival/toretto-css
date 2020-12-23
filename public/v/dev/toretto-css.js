@@ -1,11 +1,7 @@
 
 import * as funcs from './toretto-funcs.js'
-const _runtime = {
-    options: {
-        prefix: null
-    },
-    generated: {}
-}
+import { knownValues, _runtime, parseClassName } from './toretto-funcs.js'
+
 const sizes = {
     '@md': '(min-width: 50rem) and (max-width: 100rem)',
     '@lg': '(min-width: 100rem)',
@@ -13,7 +9,7 @@ const sizes = {
     '^lg': '(min-width: 100rem)',
 }
 export const components = {
-    Card: (props) => `<div>i'm card component</div>`
+
 }
 /** Chek If Tagname Is Standart Or Custom */
 export const isStandartTag = t => document.createElement(t) + '' !== '[object HTMLUnknownElement]'
@@ -25,31 +21,12 @@ export const escapeClassName = cn => {
     const pseudo = p[1] ? ':' + p.slice(1).join(':') : ''
     return cn.replace(/([()%@#:.^/]{1})/gi, '\\$1') + pseudo
 }
-/** Parse Class Name. 
- *  
- *  func[-arg1-arg2-...argX][^|@md|^|@lg][:hover|:after|:before]
- */
-export const parseClassName = cn => {
-    if (_runtime.options.prefix)
-        cn = cn.replace(`${_runtime.options.prefix}_`, '')
 
-    const t = cn.includes('^')
-    const p = cn.split(':')
-    const s = t ? p[0].split('^') : p[0].split('@')
-    const a = s[0].split('-')
-    return {
-        func: a[0],
-        args: a.slice(1),
-        size: s[1] && (t ? '^' + s[1] : '@' + s[1]),
-        pseudo: p.slice(1)
-    }
-}
 
 /** Create Style Based On Class Name. 
  * 
  * */
 export const createStyle = cn => {
-
     const tokens = parseClassName(cn.trim())
     const rawStyle = (funcs[tokens.func] || funcs.fallback)(
         tokens.func,
@@ -94,14 +71,16 @@ export function walkNodes(nodes) {
             for (let attr of node.attributes)
                 props[attr.name] = attr.value
    
-            const _el = document.createElement('div')
-            _el.innerHTML = components[node.tagName](props) 
+            const innerHTML = components[node.tagName](props).trim()
 
-            walkNodes(_el.querySelectorAll('*'))
+            const _el = document.createElement('template')            
+            _el.innerHTML = innerHTML
 
             node
                 .parentNode
-                .replaceChild(_el.firstChild, node)
+                .replaceChild(_el.content.firstChild, node)
+
+            walkNodes(_el.querySelectorAll('*'))
         }
 
         if (!node.className)
@@ -145,7 +124,8 @@ export const runToretto = (options = {}) => {
         template.id = template.id.toLowerCase()
         components[template.id.toUpperCase()] = (props) => {
             let htm = ''
-            eval(`htm=\`${template.innerHTML.trim()}\``)
+            const expression = `htm=\`${template.innerHTML.trim()}\``
+            eval(expression)
             return htm
         }
     })

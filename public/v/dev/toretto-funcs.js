@@ -1,6 +1,11 @@
-export const valToProp = {
-    'bold': 'font-weight', 'bolder': 'font-weight', 'light': 'font-weight', 'lighter': 'font-weight'
+const _runtime = {
+    options: {
+        prefix: null
+    },
+    generated: {}
 }
+
+
 const _isColor = c => {
     const el = new Option()
     const s = el.style
@@ -54,7 +59,6 @@ const _s = (size, propName) => {
         return size
     }
 
-
     const pattern = /^[0-9\.]+(rem|em|vw|vh|px|pt|%)/
     const match = size.match(pattern)
 
@@ -74,6 +78,132 @@ const css = (s, ...v) => s.reduce((a, c, i) => {
     v[i] && a.push(v[i])
     return a
 }, []).join('')
+
+export const knownPropsToKnownValues = knownProps =>
+    Object.keys(knownProps)
+        .reduce(
+            (a, propName) => {
+                knownProps[propName]
+                    .forEach(value => a[value] = propName)
+
+                return a
+            },
+            // Accumulator
+            {}
+        )
+
+export const knownProps = {
+    'font-weight': ['bold', 'bolder', 'light', 'lighter']
+}
+
+export const knownValues = {
+    // Font
+    'bold': 'font-weight', 'bolder': 'font-weight', 'light': 'font-weight', 'lighter': 'font-weight',
+
+    // Displ
+    'block': 'display', 'flex': 'display'
+}
+
+export const sides = ['top', 'right', 'bottom', 'left']
+
+
+/** Parse Class Name. 
+ *  
+ *  func[-arg1-arg2-...argX][^|@md|^|@lg][:hover|:after|:before]
+ */
+export const parseClassName = cn => {
+    if (_runtime.options.prefix)
+        cn = cn.replace(`${_runtime.options.prefix}_`, '')
+
+    const t = cn.includes('^')
+    const p = cn.split(':')
+    const s = t ? p[0].split('^') : p[0].split('@')
+    const a = s[0].split('-')
+    return {
+        func: a[0],
+        args: a.slice(1),
+        size: s[1] && (t ? '^' + s[1] : '@' + s[1]),
+        pseudo: p.slice(1)
+    }
+}
+
+/** Grouopping Prams By Type
+ *  - If typed param is found ex: class="p2-1-2-1"
+ *    then fallowing numeric params will be grouped by its type
+ *    unless new type will be found
+ */
+export const groupParams = (p = []) => {
+    let currentType = 'numeric'
+    const groups = {
+        // Vertical
+        v: [],
+        // Horizontal
+        h: [],
+
+        // Position
+        // Top
+        abs: [],
+        fix: [],
+
+        // Width
+        x: [],
+        // Height
+        y: [],
+        // Padding
+        p: [],
+        // Margin
+        m: [],
+        // Negative Margin
+        e: [],
+        // Numeric
+        numeric: [],
+        // Colors
+        colors: [],
+        known: [],
+        unknown: []
+    }
+
+    for (let _p of p) {
+
+        console.log(_p)
+
+        if (knownValues[_p]) {
+            groups.known.push(_p)
+            continue
+        }
+
+        if (_isColor(_p)) {
+            groups.colors.push(_p)
+            continue
+        }
+
+        const name = _p.substr(0, 3).replace(/([a-z]*).*/gi, '$1').trim()
+        const numericVal = _p.replace(/[^0-9.]+/gi, '').trim()
+
+        if (name !== '') {
+            currentType = name
+            if (!groups[currentType])
+                groups[currentType] = []
+
+            continue
+        }
+
+        if (numericVal !== '' || _p === '') {
+            groups[currentType].push(_p)
+            continue
+        }
+
+        groups.unknown.push(_p)
+    }
+
+    console.log(groups)
+
+    return groups
+}
+
+// const parsed = parseClassName('block-23-p-1%-1-0rem-0-m-2-2--3')
+// groupParams([parsed.func, ...parsed.args])
+
 
 /** Reset Element To Pure Basics */
 export const _ = () => css`
@@ -99,7 +229,7 @@ export const block = () =>
     css`display: block;`
 
 export const w = (f, v) =>
-    `width: ${_s(v)}`
+    css`width: ${_s(v)};`
 
 export const container = (f, ...v) =>
     css`
@@ -111,17 +241,17 @@ export const container = (f, ...v) =>
     `
 
 export const h = (f, v) =>
-    css`height: ${_s(v)}`
+    css`height: ${_s(v)};`
 
 export const m = (f, ...v) =>
     _isSide(v[0])
         ? `margin-${v[0]}: ${_s(v[1] || 1)};`
         : `margin: ${_s(v[0] || 1)};`
 
-export const mv = (f, ...v) => 
+export const mv = (f, ...v) =>
     css`
-    margin-top: ${_s(v[0] || 1)};
-    margin-bottom: ${_s(v[0] || 1)};
+        margin-top: ${_s(v[0] || 1)};
+        margin-bottom: ${_s(v[0] || 1)};
     `
 
 export const p = (f, ...v) =>
@@ -129,26 +259,26 @@ export const p = (f, ...v) =>
         ? `padding-${v[0]}: ${_s(v[1] || 1)};`
         : `padding: ${_s(v[0] || 1)};`
 
-export const pv = (f, ...v) => 
+export const pv = (f, ...v) =>
     css`
-    padding-top: ${_s(v[0] || 1)};
-    padding-bottom: ${_s(v[0] || 1)};
+        padding-top: ${_s(v[0] || 1)};
+        padding-bottom: ${_s(v[0] || 1)};
     `
 
-export const ph = (f, ...v) => 
+export const ph = (f, ...v) =>
     css`
-    padding-left: ${_s(v[0] || 1)};
-    padding-right: ${_s(v[0] || 1)};
+        padding-left: ${_s(v[0] || 1)};
+        padding-right: ${_s(v[0] || 1)};
     `
 
 export const border = (f, a, b) =>
     _isSide(a)
-        ? 
+        ?
         `
         border-${a}: 1px solid ${_color('silver', 'border-color')};
         border-radius: 0;
         `
-        : 
+        :
         css`
         border: 1px solid ${_color('silver', 'border-color')};
         border-radius: var(--border-radius, .25rem);
@@ -182,7 +312,7 @@ export const item = (f, ...v) => {
 
     if (v.includes('a'))
         return css`flex: auto; ` + g
-    
+
     if (v.includes('e'))
         return css`flex: auto; width: 0; ` + g
 
@@ -212,7 +342,7 @@ export const eq = (f, v) =>
     `
 
 /** Text Properties Shortcuts. */
-export const text = (f, s, w) =>
+export const font = (f, s, w) =>
     `
     ${s ? `font-size: ${_s(s)};` : ''}
     ${w ? `font-weight: ${w};` : ''}
@@ -237,8 +367,9 @@ export const bg = (f, v) =>
     css`background-color: ${_color(v)};`
 
 export const fallback = (f, ...v) => {
-    if (valToProp[f])
-        return `${valToProp[f]}: ${f};`
+
+    if (knownValues[f])
+        return `${knownValues[_kebabCase(f)]}: ${f};`
 
     if (_isColor(f) && !v[0])
         return css`color: ${f};`
