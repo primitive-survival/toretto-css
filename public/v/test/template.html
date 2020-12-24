@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Toretto Framework</title>
+
+    <link rel="icon" type="image/png" href="../dev/img/logo.png" />
+    <link rel="stylesheet" href="../dev/toretto-reset.css" />
+</head>
+
+<body style="visibility: hidden;" class="bg-black">
+    <template id="templatea">
+        <div class="red">
+            Template 1
+            <div>${props.children}</div>
+        </div>
+    </template>
+    <template id="templateb">
+        <div class="green">
+            Template 2
+            <div>${props.children}</div>
+        </div>
+    </template>
+
+    <div>
+
+        <Templatea>
+            <Templateb>content if template b in template a</Templateb>
+        </Templatea>
+
+    </div>
+    <!-- Toretto -->
+    <script type="module">
+        import { runToretto } from '../dev/toretto-css.js'
+        runToretto({
+            prefix: 't'
+        })
+    </script>
+    
+</body>
+</html>

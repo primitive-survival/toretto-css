@@ -15,7 +15,7 @@
     <!-- Section -->
     <template id="Section">
         <div class="mv-4">
-            <h2 class="text-2-bold mv">${props.title}</h2>
+            <h2 class="font-2-bold mv">${props.title}</h2>
             <div class="mv">${props.children}</div>
         </div>
     </template>
@@ -27,16 +27,16 @@
         </div>
     </template>
     <!-- Helper -->
-    <template id="HelperDoc">
-        <tr>
-            <td>${props.func}</td>
-            <td>${props.props}</td>
-            <td>${props.children}</td>
+    <template id="DocRow">
+        <div class="flex font-.75 pv-.5">
+            <div class="item-s w-5">${props.func}</div>
+            <div class="item-s w-10">${props.props}</div>
+            <div class="item">${props.children}</div>
         </tr>
     </template>
     <!-- Body -->
     <div class="bg-snow">
-        <div class="container ">
+        <div class="container">
             <div class="col">
                 <div class="item-s">
                     <div class="ph-1 pv-2">
@@ -49,7 +49,7 @@
                                 <!-- Navbar. -->
                                 <nav id="navbar">
                                     <div class="row gutter alignItems-center@md alignItems-baseline">
-                                        <input type="checkbox" class="trigger item-s item-1 mv none^md"
+                                        <input type="checkbox" class="trigger item-s item-1 mv-.5 none^md"
                                             onchange="document.getElementById('navbar').className = this.checked ? 'open' : 'closed'" />
                                         <div class="item-s item-0 green@open none block^md block@open">
                                             <ul class="_ gutter col row^md">
@@ -97,21 +97,45 @@
                     <!-- install and use-->
                     <div class="row-wrap gutter">
                         <div class="item-a">
-                            <div class="bg-linen text-.875 p-1 radius">
+                            <div class="bg-linen font-.875 p-1 radius">
                                 <div class="text-1-bold m-bottom">Install</div>
                                 <div style="overflow-x: auto;">
                                     <script type="text/html" data-code class="mv">
-                                    <!-- Optional Theme. -->
-                                    <link href="https://torettocss.web.app/toretto-reset.csss" rel="stylesheet">
+                                        <!-- Optional Theme. -->
+                                        <link href="https://torettocss.web.app/toretto-reset.csss" rel="stylesheet">
 
-                                    <!-- Toretto Core. -->
-                                    <script src="https://torettocss.web.app/toretto-css.jss" type="module"></script>
+                                        <!-- Toretto Core. -->
+                                        <script src="https://torettocss.web.app/toretto-css.jss" type="module"></script>
                                     </code>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <Section title="Box Helpers">
+
+                    <Section title="Available Classes">
+
+                        <strong>Font</strong>
+                        <div class="border p m-bottom">
+                            <DocRow func="w" props="width">class="w", class="w-1"</DocRow>
+                        </div>
+
+                        <strong>Width and Height</strong>
+                        <div class="border p m-bottom">
+                            <DocRow func="w" props="width">class="w", class="w-1"</DocRow>
+                        </div>
+
+                        <strong>Flex</strong>
+                        <div class="border p m-bottom">
+                            <DocRow func="flex" props="width">class="w", class="w-1"</DocRow>
+                            <DocRow func="item" props="width">class="w", class="w-1"</DocRow>
+                        </div>
+
+                        <strong>Margin</strong>
+                        <div class="border p">
+                            <DocRow func="m" props="margin">class="m", class="m-1"</DocRow>
+                            <DocRow func="m-bottom" props="margin-bottom">class="m-bottom", class="m-bottom-1"</DocRow>
+                        </div>
+
                         <SubSection title="Padding">
                             <table>
                                 <thead>
@@ -163,7 +187,7 @@
                         <ul>
                             <li>
                                 <strong>class="color-red"</strong> or <strong>class="red"</strong> — <span
-                                    class="color-red">will make text red</span>
+                                    class="color-red">will make text red</d>
                             </li>
                             <li>
                                 <strong>class="color-red:hover"</strong> — <span class="color-red:hover">will make text

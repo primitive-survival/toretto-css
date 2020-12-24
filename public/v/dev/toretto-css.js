@@ -31,7 +31,6 @@ export const components = {
 /** Check If Tagname Is Standart Or Custom.
  * 
  * */
-
 export const isStandartTag = t => document.createElement(t) + '' !== '[object HTMLUnknownElement]'
 
 /** EscapeClassName.
@@ -84,7 +83,9 @@ export function walkNodes(nodes) {
     const styles = []
 
     for (let node of nodes) {
+
         if (components[node.tagName]) {
+
             const props = {
                 children: node.innerHTML
             }
@@ -93,14 +94,14 @@ export function walkNodes(nodes) {
    
             const innerHTML = components[node.tagName](props).trim()
 
-            const _el = document.createElement('template')            
+            const _el = document.createElement('div')            
             _el.innerHTML = innerHTML
+
+            walkNodes(_el.querySelectorAll('*'))
 
             node
                 .parentNode
-                .replaceChild(_el.content.firstChild, node)
-
-            walkNodes(_el.querySelectorAll('*'))
+                .replaceChild(_el.firstChild, node)
         }
 
         if (!node.className)
